@@ -1,23 +1,59 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '../interface/user.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from '../entity/user.entity';
+import { Repository } from 'typeorm';
+import { signJWT, verifyJWT } from 'src/utils/jwt.handler';
+import { encrypt, verify } from 'src/utils/bcrypt.handler';
 
 @Injectable()
 export class UserService {
-  private readonly users: User[] = [];
+  constructor(
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
+  ) {}
 
   async createUser(user: User): Promise<User> {
-    this.users.push(user);
+    user.password = await encrypt(user.password);
+    await this.userRepository.save(user);
     return user;
   }
 
   async findAll(): Promise<User[]> {
-    return this.users;
+    const users: User[] = await this.userRepository.find();
+    return users;
   }
 
   async findById(id: number): Promise<User> {
-    const user: User = this.users.find((obj: User) => {
-      return obj.id == id;
+    const user: User = await this.userRepository.findOneBy({
+      id: id,
     });
     return user;
+  }
+
+  async login(username: string, password: string): Promise<any> {
+    const user: User = await this.userRepository.findOneBy({
+      username,
+    });
+    if (user) {
+      if (await verify(password, user.password)) {
+        const jwt = signJWT(user);
+        return {
+          message: {
+            token: jwt,
+            user: {
+              username,
+              password,
+            },
+          },
+        };
+      }
+    }
+    return { message: 'Incorrect login data' };
+  }
+
+  async verifyToken(token: string): Promise<any> {
+    const payload = verifyJWT(token);
+    return payload;
   }
 }

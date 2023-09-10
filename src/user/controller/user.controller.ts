@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Headers,
   HttpCode,
   HttpException,
   HttpStatus,
@@ -57,12 +58,55 @@ export class UserController {
     }
   }
 
-  @Get('/:id')
+  @Get('/id/:id')
   @HttpCode(200)
   async findById(@Param('id') id: number): Promise<User> {
     try {
       // res.status(201).send(newUser);
       return this.userService.findById(id);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Error in the request',
+        },
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
+
+  @Get('/login/:username/:password')
+  @HttpCode(200)
+  async login(
+    @Param('username') username: string,
+    @Param('password') password: string,
+  ): Promise<any> {
+    try {
+      // res.status(201).send(newUser);
+      return this.userService.login(username, password);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Error in the request',
+        },
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
+
+  @Get('/token')
+  @HttpCode(200)
+  async verifyToken(@Headers('Authorization') token: string): Promise<any> {
+    try {
+      // res.status(201).send(newUser);
+      return this.userService.verifyToken(token);
     } catch (error) {
       throw new HttpException(
         {

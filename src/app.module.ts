@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user/entity/user.entity';
+import { FormAnswerModule } from './form-answer/form-answer.module';
+import { FormEntity } from './form-answer/entity/form.entity';
 
 @Module({
   imports: [
@@ -15,9 +17,10 @@ import { UserEntity } from './user/entity/user.entity';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: true,
-      entities: [UserEntity],
+      entities: [UserEntity, FormEntity],
     }),
     UserModule,
+    FormAnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

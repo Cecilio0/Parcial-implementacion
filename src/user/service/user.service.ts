@@ -42,8 +42,9 @@ export class UserService {
           message: {
             token: jwt,
             user: {
-              username,
-              password,
+              id: user.id,
+              username: user.username,
+              gender: user.gender,
             },
           },
         };
@@ -53,7 +54,14 @@ export class UserService {
   }
 
   async verifyToken(token: string): Promise<any> {
-    const payload = verifyJWT(token);
-    return payload;
+    try {
+      const decodedJwt = verifyJWT(token);
+      return decodedJwt;
+    } catch (e) {
+      return {
+        type: 'Invalid Token',
+        token,
+      };
+    }
   }
 }

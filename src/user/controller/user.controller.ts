@@ -78,15 +78,12 @@ export class UserController {
     }
   }
 
-  @Get('/login/:username/:password')
+  @Post('/login')
   @HttpCode(200)
-  async login(
-    @Param('username') username: string,
-    @Param('password') password: string,
-  ): Promise<any> {
+  async login(@Body() user: User): Promise<any> {
     try {
       // res.status(201).send(newUser);
-      return this.userService.login(username, password);
+      return this.userService.login(user.username, user.password);
     } catch (error) {
       throw new HttpException(
         {

@@ -16,6 +16,7 @@ export class UserService {
   async createUser(user: User): Promise<User> {
     user.password = await encrypt(user.password);
     await this.userRepository.save(user);
+    delete user.password;
     return user;
   }
 

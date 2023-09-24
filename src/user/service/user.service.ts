@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { User } from '../interface/user.interface';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../entity/user.entity';
-import { Repository } from 'typeorm';
-import { signJWT, verifyJWT } from 'src/utils/jwt.handler';
-import { encrypt, verify } from 'src/utils/bcrypt.handler';
+import {Injectable} from '@nestjs/common';
+import {User} from '../interface/user.interface';
+import {InjectRepository} from '@nestjs/typeorm';
+import {UserEntity} from '../entity/user.entity';
+import {Repository} from 'typeorm';
+import {signJWT, verifyJWT} from 'src/utils/jwt.handler';
+import {encrypt, verify} from 'src/utils/bcrypt.handler';
 
 @Injectable()
 export class UserService {

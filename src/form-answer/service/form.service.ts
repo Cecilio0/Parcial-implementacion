@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { FormEntity } from '../entity/form.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Form } from '../interface/form.interface';
-import { verifyJWT } from 'src/utils/jwt.handler';
+import {Injectable} from '@nestjs/common';
+import {Repository} from 'typeorm';
+import {FormEntity} from '../entity/form.entity';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Form} from '../interface/form.interface';
+import {verifyJWT} from 'src/utils/jwt.handler';
 
 @Injectable()
 export class FormService {

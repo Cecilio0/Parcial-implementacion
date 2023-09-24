@@ -1,16 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Headers,
-  HttpCode,
-  HttpException,
-  HttpStatus,
-  Param,
-  Post,
-} from '@nestjs/common';
-import { FormService } from '../service/form.service';
-import { Form } from '../interface/form.interface';
+import {Body, Controller, Get, Headers, HttpCode, HttpException, HttpStatus, Param, Post,} from '@nestjs/common';
+import {FormService} from '../service/form.service';
+import {Form} from '../interface/form.interface';
 
 @Controller('forms')
 export class FormController {

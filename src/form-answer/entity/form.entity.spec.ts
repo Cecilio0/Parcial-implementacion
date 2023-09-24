@@ -1,4 +1,4 @@
-import { FormEntity } from './form.entity';
+import {FormEntity} from './form.entity';
 
 describe('Form', () => {
   it('should be defined', () => {
